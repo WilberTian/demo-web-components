@@ -1,0 +1,30 @@
+<template>
+    <style>
+        .colored {
+            color: red;
+        }
+    </style>
+
+    <p>the <strong class="colored">Hello World</strong> web component</p>
+</template>
+<script>
+    (function() {
+        // Creates an object based in the HTML Element prototype
+        // 基于HTML Element prototype 创建obj
+        var element = Object.create(HTMLElement.prototype);
+
+        // 获取特template的内容
+        var template = document.currentScript.ownerDocument.querySelector('template').content;
+
+        // element创建完成之后的回调
+        element.createdCallback = function() {
+            var shadowRoot = this.createShadowRoot();
+            var clone = document.importNode(template, true);
+            shadowRoot.appendChild(clone);
+        };
+
+        document.registerElement('hellow-world', {
+            prototype: element
+        });
+    }());
+</script>
